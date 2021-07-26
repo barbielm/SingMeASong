@@ -1,7 +1,8 @@
 import connection from '../database/database';
 
 async function createRecommendation(name: string, youtubeLink: string){
-    await connection.query(`INSERT INTO recommendations(name,"youtubeLink",score) VALUES ($1,$2,$3)`,[name, youtubeLink, 0]);
+    const newRecommendation = await connection.query(`INSERT INTO recommendations(name,"youtubeLink",score) VALUES ($1,$2,$3) RETURNING *`,[name, youtubeLink, 0]);
+    return newRecommendation;
 }
 
 async function selectSongs(){
